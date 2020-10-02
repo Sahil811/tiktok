@@ -24,6 +24,7 @@ const VideoFooter = ({ channel, description, song }) => {
       <img
         className="videoFooter__record"
         src="https://static.thenounproject.com/png/934821-200.png"
+        alt="disk"
       />
     </div>
   );

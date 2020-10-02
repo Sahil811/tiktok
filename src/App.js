@@ -1,33 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "./axios";
 import "./App.css";
 import Video from "./components/Video";
 
 function App() {
+  const [Videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await axios.get("/v2/posts");
+      setVideos(response.data);
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
     <div className="app">
       <div className="app__videos">
-        <Video
-          url={
-            "https://cdn.videvo.net/videvo_files/video/premium/video0122/small_watermarked/100a%20Factory_preview.webm"
-          }
-          likes={111}
-          shares={222}
-          messages={333}
-          channel={"@sahil"}
-          description={"mern stack tiktok clone"}
-          song={"react is the king"}
-        />
-        <Video
-          url={
-            "https://cdn.videvo.net/videvo_files/video/premium/video0121/small_watermarked/25%20Alpen%20Gold%20day%204_preview.webm"
-          }
-          likes={111}
-          shares={222}
-          messages={333}
-          channel={"@sahil"}
-          description={"mern stack tiktok clone"}
-          song={"react is the king"}
-        />
+        {Videos.map(
+          ({ url, channel, description, song, likes, messages, shares }) => (
+            <Video
+              url={url}
+              likes={parseInt(likes)}
+              shares={shares}
+              messages={messages}
+              channel={channel}
+              description={description}
+              song={song}
+            />
+          )
+        )}
       </div>
     </div>
   );
